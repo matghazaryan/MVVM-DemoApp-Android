@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/nav_graph_home_feature"
+            app:startDestination="@id/splashFragment">
+
+
+    <fragment android:id="@+id/splashFragment"
+        android:name="com.mg.demoapp.ui.splash.SplashFragment"
+        android:label="MGDemo">
+
+        <action android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/nav_graph_login">
+        </action>
+
+    </fragment>
+
+    <include app:graph="@navigation/nav_graph_login"/>
+</navigation>

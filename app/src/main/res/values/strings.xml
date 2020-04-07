@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MGDemoApp</string>
+    <string name="an_error_happened">An error happened</string>
+</resources>
