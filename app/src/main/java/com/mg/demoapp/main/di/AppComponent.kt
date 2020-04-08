@@ -12,8 +12,8 @@ val appComponent= listOf(
     createRemoteModule("http://www.mocky.io/v2/"),
     repositoryModule,
     localModule,
-    uiSplashModule
-//    uiLoginModule,
+    uiSplashModule,
+    uiLoginModule
 //    uiHomeModule,
 //    uiDetailsModule
 )

@@ -1,5 +1,6 @@
 package com.mg.demoapp.common.base
 
+import android.app.Application
 import androidx.lifecycle.*
 import androidx.navigation.NavDirections
 import com.mg.demoapp.R
@@ -7,10 +8,17 @@ import com.mg.demoapp.common.utils.Event
 import com.mg.demoapp.data.repository.AppDispatchers
 import com.mg.demoapp.data.repository.utils.Resource
 import com.mg.demoapp.navigation.NavigationCommand
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
-abstract class BaseViewModel: ViewModel() {
+
+abstract class BaseViewModel(application: Application): AndroidViewModel(application),
+    CoroutineScope {
+
+    private val job = SupervisorJob()
+
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Default
 
     // FOR ERROR HANDLER
     protected val _snackbarError = MutableLiveData<Event<Int>>()
@@ -62,6 +70,7 @@ abstract class BaseViewModel: ViewModel() {
     override fun onCleared() {
         super.onCleared()
         status.removeObserver(statusObserver)
+        coroutineContext.cancel()
     }
 }
 

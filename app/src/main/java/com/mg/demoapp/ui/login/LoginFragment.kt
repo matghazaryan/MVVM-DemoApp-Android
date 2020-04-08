@@ -1,32 +1,38 @@
 package com.mg.demoapp.ui.login
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.mg.demoapp.R
+import androidx.lifecycle.Observer
+import com.mg.demoapp.common.base.BaseFragment
+import com.mg.demoapp.common.base.BaseViewModel
+import com.mg.demoapp.databinding.LoginFragmentBinding
+import kotlinx.android.synthetic.main.login_fragment.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
-class LoginFragment : Fragment() {
+class LoginFragment : BaseFragment() {
 
-    companion object {
-        fun newInstance() = LoginFragment()
-    }
+    private lateinit var binding: LoginFragmentBinding
+    private val viewModel: LoginViewModel by viewModel()
 
-    private lateinit var viewModel: LoginViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.login_fragment, container, false)
+        binding = LoginFragmentBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
-        // TODO: Use the ViewModel
+
+        viewModel.splash.observe(viewLifecycleOwner, Observer {
+            textView.text = it.currency
+        })
     }
 
+    override fun getViewModel(): BaseViewModel = viewModel
 }

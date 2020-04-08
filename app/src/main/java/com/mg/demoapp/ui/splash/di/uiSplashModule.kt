@@ -2,11 +2,12 @@ package com.mg.demoapp.ui.splash.di
 
 import com.mg.demoapp.ui.splash.SplashViewModel
 import com.mg.demoapp.ui.splash.domain.GetSplashUseCase
+import org.koin.android.ext.koin.androidApplication
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val uiSplashModule = module {
 
     factory { GetSplashUseCase(get()) }
-    viewModel { SplashViewModel(get(),get()) }
+    viewModel { SplashViewModel(androidApplication(),get(),get()) }
 }

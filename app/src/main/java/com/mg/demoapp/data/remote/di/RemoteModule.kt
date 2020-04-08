@@ -17,18 +17,6 @@ fun createRemoteModule(baseUrl: String) = module {
             .setLevel(HttpLoggingInterceptor.Level.BODY)
     }
 
-//    factory<Interceptor> {
-//        object : Interceptor {
-//            override fun intercept(chain: Interceptor.Chain): Response {
-//                val response = chain.proceed(chain.request())
-//                println("------")
-//                println(response.body.toString())
-//                println("------")
-//                return response
-//            }
-//        }
-//    }
-
     factory { OkHttpClient.Builder().addInterceptor(get() as Interceptor).build() }
 
     single {
