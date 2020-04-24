@@ -1,6 +1,8 @@
 package com.mg.demoapp.data.remote.di
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.mg.demoapp.data.remote.service.ui.login.LoginDataSource
+import com.mg.demoapp.data.remote.service.ui.login.LoginService
 import com.mg.demoapp.data.remote.service.ui.splash.SplashDataSource
 import com.mg.demoapp.data.remote.service.ui.splash.SplashService
 import okhttp3.Interceptor
@@ -29,7 +31,9 @@ fun createRemoteModule(baseUrl: String) = module {
     }
 
     factory { get<Retrofit>().create(SplashService::class.java) }
+    factory { get<Retrofit>().create(LoginService::class.java) }
 
     factory { SplashDataSource(get()) }
+    factory { LoginDataSource(get()) }
 }
 

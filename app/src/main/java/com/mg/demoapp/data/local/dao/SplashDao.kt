@@ -26,7 +26,7 @@ abstract class SplashDao: BaseDao<Splash>() {
         insert(splash)
     }
 
-    suspend fun save(users: List<Splash>) {
+//    suspend fun save(users: List<Splash>) {
 //        insert(users.apply { forEach { it.lastRefreshed = Date() } })
-    }
+//    }
 }

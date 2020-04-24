@@ -4,6 +4,10 @@ import android.content.Context
 import android.os.Handler
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
@@ -45,3 +49,19 @@ fun View.hideKeyboard(): Boolean {
     } catch (ignored: RuntimeException) { }
     return false
 }
+
+/**
+ * Set an onclick listener
+ */
+fun <T : View> T.click(block: (T) -> Unit) = setOnClickListener { block(it as T) }
+
+/**
+ * Extension method to set OnClickListener on a view.
+ */
+fun <T : View> T.longClick(block: (T) -> Boolean) = setOnLongClickListener { block(it as T) }
+
+/**
+ * Extension method to get value from EditText.
+ */
+val EditText.value
+    get() = text.toString()

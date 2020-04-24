@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import com.mg.demoapp.common.base.BaseFragment
 import com.mg.demoapp.common.base.BaseViewModel
 import com.mg.demoapp.common.constants.MGConstants
@@ -15,11 +14,15 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class SplashFragment : BaseFragment() {
 
     private lateinit var binding: SplashFragmentBinding
-    private val viewModel : SplashViewModel by viewModel()
+    private val viewModel: SplashViewModel by viewModel()
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        (activity as AppCompatActivity?)?.supportActionBar?.hide()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        hideActionBar()
         binding = SplashFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root

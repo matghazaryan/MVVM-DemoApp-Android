@@ -14,7 +14,7 @@ abstract class MGDatabase: RoomDatabase() {
     abstract fun splashDao(): SplashDao
 
     companion object {
-        fun buildDatabase(context: Context) =
+        fun getDatabase(context: Context) =
             Room.databaseBuilder(context.applicationContext, MGDatabase::class.java, "MGDatasbase617.db")
                 .build()
     }

@@ -8,6 +8,6 @@ import org.koin.dsl.module
 private const val DATABASE = "DATABASE"
 
 val localModule = module {
-    single(named(DATABASE)) { MGDatabase.buildDatabase(androidContext()) }
+    single(named(DATABASE)) { MGDatabase.getDatabase(androidContext()) }
     factory { (get(named(DATABASE)) as MGDatabase).splashDao() }
 }

@@ -15,7 +15,7 @@ import com.mg.demoapp.data.repository.utils.Resource
 class GetSplashUseCase(private val repository: SplashRepository) {
 
     suspend operator fun invoke(): LiveData<Resource<Splash>> {
-        return Transformations.map(repository.getSplashlWithCache()) {
+        return Transformations.map(repository.getSplashWithCache()) {
             it // Place here your specific logic actions (if any)
         }
     }

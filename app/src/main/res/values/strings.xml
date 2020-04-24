@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">MGDemoApp</string>
     <string name="an_error_happened">An error happened</string>
+    <string name="login_info_message">Fake login. You can type test@test.com and password 123456 and login into app. The other credentials we can assume is wrong </string>
+    <string name="login_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="login">Login</string>
+    <string name="login_title">Login</string>
 </resources>
