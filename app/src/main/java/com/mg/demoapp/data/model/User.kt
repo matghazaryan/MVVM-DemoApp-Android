@@ -8,4 +8,4 @@ data class User(
     @SerializedName("email") val email: String = "",
     @SerializedName("github_url") val githubUrl: String = "",
     @SerializedName("is_logged_in") val isLoggedIn: Boolean = false
-)
+):Error()

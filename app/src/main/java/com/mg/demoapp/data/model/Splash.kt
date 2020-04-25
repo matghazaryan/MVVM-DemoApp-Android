@@ -9,4 +9,4 @@ data class Splash(
     val avg_time: Int,
     val currency: String,
     @SerializedName("is_has_data") val isHasData: Boolean
-)
+):Error()
