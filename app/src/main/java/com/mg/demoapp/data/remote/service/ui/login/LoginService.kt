@@ -8,6 +8,6 @@ interface LoginService {
 
     @GET("5ea305594f00005f29d9f704")
     fun loginAsyncSuccess(): Deferred<User>
-    @GET("5ea306784f00003729d9f70e")
+    @GET("5ea54d4f3000008050ce2ed1")
     fun loginAsyncErrorMessage(): Deferred<User>
 }

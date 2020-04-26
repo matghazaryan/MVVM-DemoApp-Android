@@ -8,6 +8,7 @@ import androidx.navigation.NavDirections
 import com.mg.demoapp.R
 import com.mg.demoapp.common.utils.Event
 import com.mg.demoapp.data.model.Error
+import com.mg.demoapp.data.model.ErrorObj
 import com.mg.demoapp.data.repository.AppDispatchers
 import com.mg.demoapp.data.repository.utils.Resource
 import com.mg.demoapp.navigation.NavigationCommand
@@ -24,18 +25,21 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         get() = job + Dispatchers.Default
 
     // FOR ERROR HANDLER
-    protected val _snackbarError = MutableLiveData<Event<Int>>()
-    val snackBarError: LiveData<Event<Int>> get() = _snackbarError
+    protected val _snackbarError = MutableLiveData<Event<String>>()
+    val snackBarError: LiveData<Event<String>> get() = _snackbarError
 
+    protected val _errors = MutableLiveData<Event<ArrayList<ErrorObj>>>()
+    val errors: LiveData<Event<ArrayList<ErrorObj>>> get() = _errors
     // FOR NAVIGATION
     private val _navigation = MutableLiveData<Event<NavigationCommand>>()
     val navigation: LiveData<Event<NavigationCommand>> = _navigation
 
     private var status = MediatorLiveData<Resource.Status>()
-    private var resource = MediatorLiveData<Resource<Error>>()
+    private var resource = MediatorLiveData<Resource<Any?>>()
     private val statusObserver: androidx.lifecycle.Observer<Resource.Status> =
         androidx.lifecycle.Observer {}
-    private val resourceObserver: Observer<Resource<Error>> = Observer { }
+    private val resourceObserver: Observer<Resource<Any?>> = Observer { }
+
 
     init {
         status.observeForever { statusObserver }//statusObserver's onChanged() method won't be  called without active observer
@@ -54,18 +58,21 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         dispatchers: AppDispatchers,
         request: suspend () -> LiveData<Resource<T>>,
         callback: (LiveData<Resource<T>>) -> Unit
-    ) where T : com.mg.demoapp.data.model.Error {
+    ) {
         viewModelScope.launch(dispatchers.main) {
             val result: LiveData<Resource<T>> = withContext(dispatchers.io) {
                 request()
             }
             resource.addSource(Transformations.map(result) { _result -> _result }) { _result ->
-                resource.value = _result
-                if(_result.status!= Resource.Status.LOADING) {
-                    if (!handleError(_result)) {
+                when (_result.status) {
+                    Resource.Status.SUCCESS -> {
                         callback(result)
                     }
+                    Resource.Status.ERROR -> {
+                        handleError(_result)
+                    }
                 }
+                resource.value = _result
             }
 
             status.addSource(Transformations.map(result) { _result -> _result.status }) { _status ->
@@ -79,32 +86,17 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
     /** This function returns true if error has occurred **/
 
-    private fun <T> handleError(result: Resource<T>): Boolean where T : com.mg.demoapp.data.model.Error {
-        when {
-            (result.status == Resource.Status.ERROR) -> {
-                _snackbarError.value =
-                    Event(R.string.an_error_happened)
-                return true
-            }
-            (result.status == Resource.Status.SUCCESS) -> {
-                result.data?.let { data ->
-                    if (!data.success!!) {
-                        Log.d("----", "error message:${data.status_message}")
-                        _snackbarError.value =
-                            Event(R.string.an_error_happened)
-                        return true
-                    }
+    private fun <T> handleError(result: Resource<T>) {
+        if (result.status == Resource.Status.ERROR) {
+            result.error?.let { error ->
+                error.message?.let { message ->
+                    _snackbarError.value =
+                        Event(message)
                 }
+                _errors.value = Event(error.errors)
             }
         }
-        return false
     }
-
-
-//    private fun handleError(status: Resource.Status) {
-//        if (status == Resource.Status.ERROR) _snackbarError.value =
-//            Event(R.string.an_error_happened)
-//    }
 
     override fun onCleared() {
         super.onCleared()

@@ -1,8 +1,10 @@
 package com.mg.demoapp.data.repository.utils
 
-data class Resource<out T>(val status: Status, val data: T?, val error: Throwable?) where T : com.mg.demoapp.data.model.Error{
+import com.mg.demoapp.data.model.Error
+
+data class Resource<out T>(val status: Status, val data: T?, val error: Error?) {
     companion object {
-        fun <T> success(data: T?): Resource<T> where T : com.mg.demoapp.data.model.Error{
+        fun <T> success(data: T?): Resource<T> {
             return Resource(
                 Status.SUCCESS,
                 data,
@@ -10,7 +12,7 @@ data class Resource<out T>(val status: Status, val data: T?, val error: Throwabl
             )
         }
 
-        fun <T> error(error: Throwable, data: T?): Resource<T> where T : com.mg.demoapp.data.model.Error{
+        fun <T> error(error: Error, data: T?): Resource<T> {
             return Resource(
                 Status.ERROR,
                 data,
@@ -18,7 +20,7 @@ data class Resource<out T>(val status: Status, val data: T?, val error: Throwabl
             )
         }
 
-        fun <T> loading(data: T?): Resource<T> where T : com.mg.demoapp.data.model.Error{
+        fun <T> loading(data: T?): Resource<T> {
             return Resource(
                 Status.LOADING,
                 data,

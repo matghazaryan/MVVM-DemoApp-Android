@@ -5,11 +5,12 @@ import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.mg.demoapp.data.model.Error
 import kotlinx.coroutines.*
+import java.lang.Exception
 import kotlin.coroutines.coroutineContext
 
-
-abstract class NetworkBoundResource<ResultType, RequestType> where ResultType : com.mg.demoapp.data.model.Error {
+abstract class NetworkBoundResource<ResultType, RequestType> {
 
     private val result = MutableLiveData<Resource<ResultType>>()
     private val supervisorJob = SupervisorJob()
@@ -24,7 +25,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> where ResultType : 
             if (shouldFetch(dbResult)) {
                 try {
                     fetchFromNetwork(dbResult)
-                } catch (e: Exception) {
+                } catch (e: Error) {
                     Log.e("NetworkBoundResource", "An error happened: $e")
                     setValue(Resource.error(e, loadFromDb()))
                 }
@@ -46,7 +47,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> where ResultType : 
         val apiResponse = createCallAsync().await()
         Log.e(NetworkBoundResource::class.java.name, "Data fetched from network")
         saveCallResults(processResponse(apiResponse))
-        setValue(Resource.success(processResponse(apiResponse))) //TODO return result from db
+        setValue(Resource.success(loadFromDb()))
     }
 
     @MainThread

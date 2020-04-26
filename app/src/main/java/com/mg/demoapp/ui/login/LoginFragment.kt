@@ -29,6 +29,8 @@ class LoginFragment : BaseFragment() {
         setActionBarTitle(R.string.login)
         binding = LoginFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.etLogin.tag = "username"
+        binding.etPassword.tag = "password"
         return binding.root
     }
 
@@ -37,6 +39,7 @@ class LoginFragment : BaseFragment() {
 
         fetchSplashDataFromDatabase()
         handleLoginButtonClick()
+        observeFieldErrors()
     }
 
     private fun fetchSplashDataFromDatabase() {
@@ -45,11 +48,20 @@ class LoginFragment : BaseFragment() {
         })
     }
 
-    private fun handleLoginButtonClick(){
+    private fun handleLoginButtonClick() {
         btnLogin.click {
-            viewModel.chooseLoginType(etLogin.value,etPassword.value)
+            viewModel.chooseLoginType(etLogin.value, etPassword.value)
         }
     }
 
-
+    private fun observeFieldErrors() {
+        viewModel.errors.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let { errors ->
+                errors.find { error -> error.field_name == binding.etLogin.tag }
+                    ?.let { error -> binding.etLogin.error = error.error_message }
+                errors.find { error -> error.field_name == binding.etPassword.tag }
+                    ?.let { error -> binding.etPassword.error = error.error_message }
+            }
+        })
+    }
 }
