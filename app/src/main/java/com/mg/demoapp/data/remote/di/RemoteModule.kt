@@ -5,9 +5,9 @@ import com.mg.demoapp.data.remote.service.ui.login.LoginDataSource
 import com.mg.demoapp.data.remote.service.ui.login.LoginService
 import com.mg.demoapp.data.remote.service.ui.splash.SplashDataSource
 import com.mg.demoapp.data.remote.service.ui.splash.SplashService
+import com.mg.demoapp.data.repository.utils.ErrorInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -19,7 +19,11 @@ fun createRemoteModule(baseUrl: String) = module {
             .setLevel(HttpLoggingInterceptor.Level.BODY)
     }
 
-    factory { OkHttpClient.Builder().addInterceptor(get() as Interceptor).build() }
+    factory {
+        OkHttpClient.Builder().addInterceptor(get() as Interceptor)
+            .addInterceptor(ErrorInterceptor())
+            .build()
+    }
 
     single {
         Retrofit.Builder()

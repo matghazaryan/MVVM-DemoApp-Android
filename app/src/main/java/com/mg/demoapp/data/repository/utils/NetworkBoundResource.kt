@@ -5,6 +5,7 @@ import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.mg.demoapp.data.model.Error
 import kotlinx.coroutines.*
 import java.lang.Exception
 import kotlin.coroutines.coroutineContext
@@ -24,7 +25,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
             if (shouldFetch(dbResult)) {
                 try {
                     fetchFromNetwork(dbResult)
-                } catch (e: Exception) {
+                } catch (e: Error) {
                     Log.e("NetworkBoundResource", "An error happened: $e")
                     setValue(Resource.error(e, loadFromDb()))
                 }
