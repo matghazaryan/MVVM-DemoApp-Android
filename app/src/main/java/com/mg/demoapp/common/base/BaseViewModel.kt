@@ -3,8 +3,10 @@ package com.mg.demoapp.common.base
 import android.app.Application
 import android.provider.MediaStore
 import android.util.Log
+import androidx.annotation.IdRes
 import androidx.lifecycle.*
 import androidx.navigation.NavDirections
+import androidx.navigation.NavOptions
 import com.mg.demoapp.R
 import com.mg.demoapp.common.utils.Event
 import com.mg.demoapp.data.model.Error
@@ -30,6 +32,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
     protected val _errors = MutableLiveData<Event<ArrayList<ErrorObj>>>()
     val errors: LiveData<Event<ArrayList<ErrorObj>>> get() = _errors
+
     // FOR NAVIGATION
     private val _navigation = MutableLiveData<Event<NavigationCommand>>()
     val navigation: LiveData<Event<NavigationCommand>> = _navigation
@@ -52,6 +55,18 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
      */
     fun navigate(directions: NavDirections) {
         _navigation.value = Event(NavigationCommand.To(directions))
+    }
+
+    fun navigate(directions: NavDirections, options: NavOptions? = null) {
+        _navigation.value = Event(NavigationCommand.To(directions, options))
+    }
+
+    fun popBackStackTo(@IdRes destinationId: Int, inclusive: Boolean) {
+        _navigation.value = Event(NavigationCommand.PopBackStackTo(destinationId, inclusive))
+    }
+
+    fun navigateBack() {
+        _navigation.value = Event(NavigationCommand.Back)
     }
 
     fun <T> handleRequest(
