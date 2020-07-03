@@ -38,7 +38,7 @@ class SplashViewModel(
             splash.addSource(splashSource) {
                 if (it.status == Resource.Status.SUCCESS)
                     navigate(SplashFragmentDirections.actionSplashFragmentToLoginFragment(),NavOptions.Builder().setPopUpTo(
-                        R.id.loginFragment,true).build())
+                        R.id.splashFragment,true).build())
             }
         }
     }

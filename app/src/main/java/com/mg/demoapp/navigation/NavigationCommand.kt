@@ -26,5 +26,4 @@ sealed class NavigationCommand {
 //    data class ToPin(val id: String, val info: Bundle? = null, val args: NavArgs? = null) :
 //        NavigationCommand()
 
-    object Forbidden : NavigationCommand()
 }
