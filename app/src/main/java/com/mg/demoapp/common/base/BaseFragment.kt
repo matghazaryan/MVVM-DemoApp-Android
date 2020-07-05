@@ -34,8 +34,9 @@ abstract class BaseFragment: Fragment() {
         viewModel.navigation.observe(viewLifecycleOwner, Observer {
             it?.getContentIfNotHandled()?.let { command ->
                 when (command) {
-                    is NavigationCommand.To -> findNavController().navigate(command.directions, getExtras())
+                    is NavigationCommand.To -> findNavController().navigate(command.directions,command.options)
                     is NavigationCommand.Back -> findNavController().navigateUp()
+                    is NavigationCommand.PopBackStackTo -> findNavController().popBackStack(command.destinationId,command.inclusive)
                 }
             }
         })

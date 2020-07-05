@@ -1,7 +1,12 @@
 package com.mg.demoapp.ui.splash
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.navigation.NavOptions
+import com.mg.demoapp.R
 import com.mg.demoapp.common.base.BaseViewModel
 import com.mg.demoapp.data.model.Splash
 import com.mg.demoapp.data.repository.AppDispatchers
@@ -32,7 +37,8 @@ class SplashViewModel(
             splashSource = result
             splash.addSource(splashSource) {
                 if (it.status == Resource.Status.SUCCESS)
-                    navigate(SplashFragmentDirections.actionSplashFragmentToLoginFragment())
+                    navigate(SplashFragmentDirections.actionSplashFragmentToLoginFragment(),NavOptions.Builder().setPopUpTo(
+                        R.id.splashFragment,true).build())
             }
         }
     }
