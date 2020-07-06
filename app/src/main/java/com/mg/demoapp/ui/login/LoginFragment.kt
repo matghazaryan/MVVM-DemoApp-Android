@@ -10,15 +10,16 @@ import com.mg.demoapp.common.base.BaseFragment
 import com.mg.demoapp.common.base.BaseViewModel
 import com.mg.demoapp.common.estensions.click
 import com.mg.demoapp.common.estensions.value
+import com.mg.demoapp.data.preference.di.Preferences
 import com.mg.demoapp.databinding.LoginFragmentBinding
 import kotlinx.android.synthetic.main.login_fragment.*
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class LoginFragment : BaseFragment() {
 
     private lateinit var binding: LoginFragmentBinding
     private val viewModel: LoginViewModel by viewModel()
-
 
     override fun getViewModel(): BaseViewModel = viewModel
 

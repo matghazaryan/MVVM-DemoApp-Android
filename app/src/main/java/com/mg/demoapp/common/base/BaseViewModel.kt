@@ -86,6 +86,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
                     Resource.Status.ERROR -> {
                         handleError(_result)
                     }
+                    Resource.Status.LOADING -> {}
                 }
                 resource.value = _result
             }

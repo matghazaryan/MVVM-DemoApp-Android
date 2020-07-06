@@ -28,9 +28,7 @@ class SplashViewModel(
         with(splash) { observeForever(fakeObserver) }
     }
 
-    fun loadSplashConfigs() {
-        getSplash()
-    }
+    fun loadSplashConfigs() = getSplash()
 
     private fun getSplash() {
         handleRequest(dispatchers, { splashUseCase() }) { result ->
