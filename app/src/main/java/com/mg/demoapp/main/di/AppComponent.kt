@@ -15,7 +15,7 @@ val appComponent= listOf(
     localModule,
     prefModule,
     uiSplashModule,
-    uiLoginModule
-//    uiHomeModule,
+    uiLoginModule,
+    uiHomeModule
 //    uiDetailsModule
 )
