@@ -10,7 +10,7 @@ import com.mg.demoapp.ui.login.di.uiLoginModule
 import com.mg.demoapp.ui.splash.di.uiSplashModule
 
 val appComponent= listOf(
-    createRemoteModule("http://www.mocky.io/v2/"),
+    createRemoteModule("https://run.mocky.io/v3/"),
     repositoryModule,
     localModule,
     prefModule,

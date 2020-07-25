@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface HomeService {
 
-    @GET("search/users")
+    @GET("52be9777-4374-405c-ad0e-f5e65d242d76")
     suspend fun fetchTopUsersAsync(@Query("q") query: String = "matevos",
                                    @Query("sort") sort: String = "followers"): ApiResult<GithubUser>
 

@@ -7,6 +7,6 @@ import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val uiHomeModule = module {
-    factory { GetTopUsersUseCase(get()) }
+//    factory { GetTopUsersUseCase(get()) }
     viewModel { HomeViewModel(androidApplication(),get(),get()) }
 }

@@ -15,7 +15,7 @@ isHasData: true
  */
 interface SplashService {
 
-    @GET("5e8c6e252f00002b0088caf7")
+    @GET("0083f18e-a079-491c-a606-96491fc17142")
     fun fetchSplashAsync(): Deferred<Splash>
 }
 

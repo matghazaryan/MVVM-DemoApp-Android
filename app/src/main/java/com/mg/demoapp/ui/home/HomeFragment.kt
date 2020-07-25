@@ -32,7 +32,7 @@ class HomeFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        configureRecyclerView()
+//        configureRecyclerView()
         println(preferences.getUserName())
     }
 
